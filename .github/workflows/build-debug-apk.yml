@@ -35,6 +35,28 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      # AGP's default debug signing uses a per-machine ~/.android/debug.keystore that it
+      # generates on first use with a RANDOM key. A fresh GitHub Actions runner has none, so
+      # every run would sign the APK differently — installing over yesterday's build then
+      # fails with INSTALL_FAILED_UPDATE_INCOMPATIBLE, forcing a full uninstall/reinstall
+      # (losing YouTube login, playlists, downloads) on every iteration. Cache one keystore
+      # across runs instead, keyed on a fixed name so it's created once and reused forever.
+      - name: Restore/create stable debug keystore
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: debug-keystore-v1
+
+      - name: Generate debug keystore if not cached yet
+        run: |
+          mkdir -p ~/.android
+          if [ ! -f ~/.android/debug.keystore ]; then
+            keytool -genkey -v -keystore ~/.android/debug.keystore \
+              -storepass android -alias androiddebugkey -keypass android \
+              -keyalg RSA -keysize 2048 -validity 10000 \
+              -dname "CN=Android Debug,O=Android,C=US"
+          fi
+
       - name: Assemble debug APK
         run: ./gradlew :androidApp:assembleDebug --no-daemon --stacktrace
 

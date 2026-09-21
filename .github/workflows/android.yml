@@ -1,25 +1,9 @@
 name: Build release APK (FOSS)
+# Manual-only in this fork: build-debug-apk.yml covers day-to-day testing builds,
+# and this workflow's automatic push/pull_request triggers were firing redundant
+# runs on every push to dev alongside it. Still runnable by hand if ever needed.
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - 'dev'
-    paths-ignore:
-      - 'README.md'
-      - 'fastlane/**'
-      - 'assets/**'
-      - '.github/**/*.md'
-      - '.github/FUNDING.yml'
-      - '.github/ISSUE_TEMPLATE/**'
-  pull_request:
-    branches: [ dev ]
-    paths-ignore:
-      - 'README.md'
-      - 'fastlane/**'
-      - 'assets/**'
-      - '.github/**/*.md'
-      - '.github/FUNDING.yml'
-      - '.github/ISSUE_TEMPLATE/**'
 
 jobs:
   build:

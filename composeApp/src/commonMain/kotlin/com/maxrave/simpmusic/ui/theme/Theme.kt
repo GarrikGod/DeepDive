@@ -179,6 +179,7 @@ fun AppTheme(
                 isDark = true,
                 isAmoled = true,
                 style = PaletteStyle.TonalSpot,
+                modifyColorScheme = { cs -> cs.withCobaltSecondary(isDark = true) },
             )
         }
     SystemBarAppearanceEffect(isDark)

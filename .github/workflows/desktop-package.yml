@@ -17,18 +17,11 @@ name: Build desktop packages (cross-OS via Conveyor)
 #    `.dmg`, which Sequoia treats more leniently — that's the UX we want
 #    to preserve.
 
+# Manual-only in this fork: this fork is Android-only and the Conveyor cross-build
+# needs signing/publishing secrets this repo doesn't have, so its automatic push
+# trigger produced a failing run on every push unrelated to what actually broke.
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - 'dev'
-    paths-ignore:
-      - 'README.md'
-      - 'fastlane/**'
-      - 'assets/**'
-      - '.github/**/*.md'
-      - '.github/FUNDING.yml'
-      - '.github/ISSUE_TEMPLATE/**'
 
 permissions:
   contents: write
