@@ -98,7 +98,6 @@ import com.maxrave.common.LIMIT_CACHE_SIZE
 import com.maxrave.common.QUALITY
 import com.maxrave.common.SUPPORTED_LANGUAGE
 import com.maxrave.common.SUPPORTED_LOCATION
-import com.maxrave.common.SponsorBlockType
 import com.maxrave.common.VIDEO_QUALITY
 import com.maxrave.domain.extension.now
 import com.maxrave.domain.data.model.lyrics.RomanizationDictionaryState
@@ -134,10 +133,7 @@ import com.maxrave.simpmusic.ui.icon.PeopleAlt
 import com.maxrave.simpmusic.ui.icon.PlaylistAdd
 import com.maxrave.simpmusic.ui.icon.SimpIcons
 import com.maxrave.simpmusic.ui.navigation.destination.home.CreditDestination
-import com.maxrave.simpmusic.ui.navigation.destination.login.DiscordLoginDestination
-import com.maxrave.simpmusic.ui.navigation.destination.login.LastfmLoginDestination
 import com.maxrave.simpmusic.ui.navigation.destination.login.LoginDestination
-import com.maxrave.simpmusic.ui.navigation.destination.login.SpotifyLoginDestination
 import com.maxrave.simpmusic.ui.theme.md_theme_dark_primary
 import com.maxrave.simpmusic.ui.theme.parseThemeColorHex
 import com.maxrave.simpmusic.ui.theme.typo
@@ -178,9 +174,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import simpmusic.composeapp.generated.resources.Res
 import simpmusic.composeapp.generated.resources.about_us
 import simpmusic.composeapp.generated.resources.add_an_account
-import simpmusic.composeapp.generated.resources.ai
 import simpmusic.composeapp.generated.resources.ai_api_key
-import simpmusic.composeapp.generated.resources.ai_provider
 import simpmusic.composeapp.generated.resources.anonymous
 import simpmusic.composeapp.generated.resources.app_name
 import simpmusic.composeapp.generated.resources.audio
@@ -205,9 +199,6 @@ import simpmusic.composeapp.generated.resources.blog_notification_description
 import simpmusic.composeapp.generated.resources.blog_notification_title
 import simpmusic.composeapp.generated.resources.buy_me_a_coffee
 import simpmusic.composeapp.generated.resources.cancel
-import simpmusic.composeapp.generated.resources.animated_artwork_info
-import simpmusic.composeapp.generated.resources.canvas_info
-import simpmusic.composeapp.generated.resources.categories_sponsor_block
 import simpmusic.composeapp.generated.resources.change
 import simpmusic.composeapp.generated.resources.change_language_warning
 import simpmusic.composeapp.generated.resources.check_for_update
@@ -241,25 +232,17 @@ import simpmusic.composeapp.generated.resources.default_models
 import simpmusic.composeapp.generated.resources.description_and_licenses
 import simpmusic.composeapp.generated.resources.developer_blog
 import simpmusic.composeapp.generated.resources.developer_blog_tagline
-import simpmusic.composeapp.generated.resources.discord_integration
 import simpmusic.composeapp.generated.resources.donation
 import simpmusic.composeapp.generated.resources.download_quality
 import simpmusic.composeapp.generated.resources.downloaded_cache
-import simpmusic.composeapp.generated.resources.enable_animated_artwork
-import simpmusic.composeapp.generated.resources.enable_canvas
 import simpmusic.composeapp.generated.resources.enable_liquid_glass_effect
 import simpmusic.composeapp.generated.resources.enable_liquid_glass_effect_description
-import simpmusic.composeapp.generated.resources.enable_rich_presence
-import simpmusic.composeapp.generated.resources.enable_scrobbling
-import simpmusic.composeapp.generated.resources.enable_sponsor_block
-import simpmusic.composeapp.generated.resources.enable_spotify_lyrics
 import simpmusic.composeapp.generated.resources.equalizer
 import simpmusic.composeapp.generated.resources.equalizer_description
 import simpmusic.composeapp.generated.resources.equalizer_type
 import simpmusic.composeapp.generated.resources.equalizer_type_built_in
 import simpmusic.composeapp.generated.resources.equalizer_type_system
 import simpmusic.composeapp.generated.resources.free_space
-import simpmusic.composeapp.generated.resources.gemini
 import simpmusic.composeapp.generated.resources.guest
 import simpmusic.composeapp.generated.resources.help_build_lyrics_database
 import simpmusic.composeapp.generated.resources.help_build_lyrics_database_description
@@ -272,9 +255,6 @@ import simpmusic.composeapp.generated.resources.import_progress_songs
 import simpmusic.composeapp.generated.resources.import_reading_file
 import simpmusic.composeapp.generated.resources.import_result
 import simpmusic.composeapp.generated.resources.import_result_skipped
-import simpmusic.composeapp.generated.resources.intro_login_to_discord
-import simpmusic.composeapp.generated.resources.intro_login_to_lastfm
-import simpmusic.composeapp.generated.resources.intro_login_to_spotify
 import simpmusic.composeapp.generated.resources.invalid
 import simpmusic.composeapp.generated.resources.invalid_api_key
 import simpmusic.composeapp.generated.resources.invalid_host
@@ -289,21 +269,12 @@ import simpmusic.composeapp.generated.resources.kill_service_on_exit_description
 import simpmusic.composeapp.generated.resources.language
 import simpmusic.composeapp.generated.resources.last_backup
 import simpmusic.composeapp.generated.resources.last_checked_at
-import simpmusic.composeapp.generated.resources.lastfm_integration
 import simpmusic.composeapp.generated.resources.limit_player_cache
 import simpmusic.composeapp.generated.resources.listening_history
 import simpmusic.composeapp.generated.resources.local_tracking_description
 import simpmusic.composeapp.generated.resources.local_tracking_title
-import simpmusic.composeapp.generated.resources.log_in_to_discord
-import simpmusic.composeapp.generated.resources.log_in_to_lastfm
-import simpmusic.composeapp.generated.resources.log_in_to_spotify
 import simpmusic.composeapp.generated.resources.log_out
-import simpmusic.composeapp.generated.resources.log_out_from_discord
-import simpmusic.composeapp.generated.resources.log_out_from_lastfm
-import simpmusic.composeapp.generated.resources.log_out_from_spotify
 import simpmusic.composeapp.generated.resources.log_out_warning
-import simpmusic.composeapp.generated.resources.logged_in
-import simpmusic.composeapp.generated.resources.logged_in_as
 import simpmusic.composeapp.generated.resources.login_sync_android_description
 import simpmusic.composeapp.generated.resources.login_sync_android_title
 import simpmusic.composeapp.generated.resources.login_sync_desktop_description
@@ -348,8 +319,6 @@ import simpmusic.composeapp.generated.resources.now_playing_style_m3_expressive
 import simpmusic.composeapp.generated.resources.now_playing_style_spotify
 import simpmusic.composeapp.generated.resources.ok
 import simpmusic.composeapp.generated.resources.open_system_equalizer
-import simpmusic.composeapp.generated.resources.openai
-import simpmusic.composeapp.generated.resources.openai_api_compatible
 import simpmusic.composeapp.generated.resources.other_app
 import simpmusic.composeapp.generated.resources.play_explicit_content
 import simpmusic.composeapp.generated.resources.play_explicit_content_description
@@ -373,12 +342,10 @@ import simpmusic.composeapp.generated.resources.radio_audio_only_description
 import simpmusic.composeapp.generated.resources.requires_android_12
 import simpmusic.composeapp.generated.resources.restore_your_data
 import simpmusic.composeapp.generated.resources.restore_your_saved_data
-import simpmusic.composeapp.generated.resources.rich_presence_info
 import simpmusic.composeapp.generated.resources.save
 import simpmusic.composeapp.generated.resources.save_all_your_playlist_data
 import simpmusic.composeapp.generated.resources.save_playback_state
 import simpmusic.composeapp.generated.resources.save_shuffle_and_repeat_mode
-import simpmusic.composeapp.generated.resources.scrobbling_info
 import simpmusic.composeapp.generated.resources.send_back_listening_data_to_google
 import simpmusic.composeapp.generated.resources.set
 import simpmusic.composeapp.generated.resources.settings
@@ -386,13 +353,8 @@ import simpmusic.composeapp.generated.resources.signed_in
 import simpmusic.composeapp.generated.resources.simpmusic_lyrics
 import simpmusic.composeapp.generated.resources.skip_no_music_part
 import simpmusic.composeapp.generated.resources.skip_silent
-import simpmusic.composeapp.generated.resources.skip_sponsor_part_of_video
 import simpmusic.composeapp.generated.resources.socks
-import simpmusic.composeapp.generated.resources.sponsorBlock
-import simpmusic.composeapp.generated.resources.sponsor_block_intro
-import simpmusic.composeapp.generated.resources.spotify
 import simpmusic.composeapp.generated.resources.spotify_canvas_cache
-import simpmusic.composeapp.generated.resources.spotify_lyrícs_info
 import simpmusic.composeapp.generated.resources.storage
 import simpmusic.composeapp.generated.resources.such_as_music_video_lyrics_video_podcasts_and_more
 import simpmusic.composeapp.generated.resources.sync_follow_to_youtube
@@ -413,8 +375,6 @@ import simpmusic.composeapp.generated.resources.translucent_bottom_navigation_ba
 import simpmusic.composeapp.generated.resources.unknown
 import simpmusic.composeapp.generated.resources.update_channel
 import simpmusic.composeapp.generated.resources.upload_your_listening_history_to_youtube_music_server_it_will_make_yt_music_recommendation_system_better_working_only_if_logged_in
-import simpmusic.composeapp.generated.resources.use_ai_translation
-import simpmusic.composeapp.generated.resources.use_ai_translation_description
 import simpmusic.composeapp.generated.resources.use_your_system_equalizer
 import simpmusic.composeapp.generated.resources.user_interface
 import simpmusic.composeapp.generated.resources.version
@@ -529,12 +489,6 @@ fun SettingScreen(
     val mainLyricsProvider by viewModel.mainLyricsProvider.collectAsStateWithLifecycle()
     val lyricsOffsetMs by viewModel.lyricsOffsetMs.collectAsStateWithLifecycle()
     val youtubeSubtitleLanguage by viewModel.youtubeSubtitleLanguage.collectAsStateWithLifecycle()
-    val spotifyLoggedIn by viewModel.spotifyLogIn.collectAsStateWithLifecycle()
-    val spotifyLyrics by viewModel.spotifyLyrics.collectAsStateWithLifecycle()
-    val spotifyCanvas by viewModel.spotifyCanvas.collectAsStateWithLifecycle()
-    val amAnimatedArtwork by viewModel.amAnimatedArtwork.collectAsStateWithLifecycle()
-    val enableSponsorBlock by remember { viewModel.sponsorBlockEnabled.map { it == TRUE } }.collectAsStateWithLifecycle(initialValue = false)
-    val skipSegments by viewModel.sponsorBlockCategories.collectAsStateWithLifecycle()
     val playerCache by viewModel.cacheSize.collectAsStateWithLifecycle()
     val downloadedCache by viewModel.downloadedCacheSize.collectAsStateWithLifecycle()
     val thumbnailCache by viewModel.thumbCacheSize.collectAsStateWithLifecycle()
@@ -550,13 +504,7 @@ fun SettingScreen(
     val proxyUsername by viewModel.proxyUsername.collectAsStateWithLifecycle()
     val proxyPassword by viewModel.proxyPassword.collectAsStateWithLifecycle()
     val autoCheckUpdate by viewModel.autoCheckUpdate.collectAsStateWithLifecycle()
-    val aiProvider by viewModel.aiProvider.collectAsStateWithLifecycle()
-    val isHasApiKey by viewModel.isHasApiKey.collectAsStateWithLifecycle()
-    val useAITranslation by viewModel.useAITranslation.collectAsStateWithLifecycle()
     val translationLanguage by viewModel.translationLanguage.collectAsStateWithLifecycle()
-    val customModelId by viewModel.customModelId.collectAsStateWithLifecycle()
-    val customOpenAIBaseUrl by viewModel.customOpenAIBaseUrl.collectAsStateWithLifecycle()
-    val customOpenAIHeaders by viewModel.customOpenAIHeaders.collectAsStateWithLifecycle()
     val helpBuildLyricsDatabase by viewModel.helpBuildLyricsDatabase.collectAsStateWithLifecycle()
     val contributor by viewModel.contributor.collectAsStateWithLifecycle()
     val backupDownloaded by viewModel.backupDownloaded.collectAsStateWithLifecycle()
@@ -574,17 +522,12 @@ fun SettingScreen(
     val romanizationStored by sharedViewModel.getRomanizationLanguages().collectAsStateWithLifecycle("")
     val japaneseDictionaryState by viewModel.japaneseDictionaryState.collectAsStateWithLifecycle()
     var showColorPickerDialog by rememberSaveable { mutableStateOf(false) }
-    val discordLoggedIn by viewModel.discordLoggedIn.collectAsStateWithLifecycle()
     val loggedIn by viewModel.loggedIn.collectAsStateWithLifecycle()
     val syncFollowToYouTube by viewModel.syncFollowToYouTube.collectAsStateWithLifecycle()
     val equalizerEnabled by viewModel.equalizerEnabled.collectAsStateWithLifecycle()
     val equalizerType by viewModel.equalizerType.collectAsStateWithLifecycle()
     val delayEnabled by viewModel.delayEnabled.collectAsStateWithLifecycle()
     val reverbEnabled by viewModel.reverbEnabled.collectAsStateWithLifecycle()
-    val lastfmLoggedIn by viewModel.lastfmLoggedIn.collectAsStateWithLifecycle()
-    val lastfmUsername by viewModel.lastfmUsername.collectAsStateWithLifecycle()
-    val lastfmScrobbleEnabled by viewModel.lastfmScrobbleEnabled.collectAsStateWithLifecycle()
-    val richPresenceEnabled by viewModel.richPresenceEnabled.collectAsStateWithLifecycle()
 
     val crossfadeEnabled by viewModel.crossfadeEnabled.collectAsStateWithLifecycle()
     val crossfadeDuration by viewModel.crossfadeDuration.collectAsStateWithLifecycle()
@@ -1810,396 +1753,6 @@ fun SettingScreen(
                             ),
                         )
                     },
-                )
-            }
-        }
-        item(key = "AI") {
-            Column {
-                Text(
-                    text = stringResource(Res.string.ai),
-                    style = typo().labelMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.padding(vertical = 8.dp),
-                )
-                SettingItem(
-                    title = stringResource(Res.string.ai_provider),
-                    subtitle =
-                        when (aiProvider) {
-                            DataStoreManager.AI_PROVIDER_OPENAI -> stringResource(Res.string.openai)
-                            DataStoreManager.AI_PROVIDER_GEMINI -> stringResource(Res.string.gemini)
-                            DataStoreManager.AI_PROVIDER_CUSTOM_OPENAI -> stringResource(Res.string.openai_api_compatible)
-                            else -> stringResource(Res.string.unknown)
-                        },
-                    onClick = {
-                        viewModel.setAlertData(
-                            SettingAlertState(
-                                title = runBlocking { getString(Res.string.ai_provider) },
-                                selectOne =
-                                    SettingAlertState.SelectData(
-                                        listSelect =
-                                            listOf(
-                                                (mainLyricsProvider == DataStoreManager.AI_PROVIDER_OPENAI) to
-                                                    runBlocking { getString(Res.string.openai) },
-                                                (mainLyricsProvider == DataStoreManager.AI_PROVIDER_GEMINI) to
-                                                    runBlocking { getString(Res.string.gemini) },
-                                                (mainLyricsProvider == DataStoreManager.AI_PROVIDER_CUSTOM_OPENAI) to
-                                                    runBlocking { getString(Res.string.openai_api_compatible) },
-                                            ),
-                                    ),
-                                confirm =
-                                    runBlocking { getString(Res.string.change) } to { state ->
-                                        viewModel.setAIProvider(
-                                            when (state.selectOne?.getSelected()) {
-                                                runBlocking { getString(Res.string.openai) } -> DataStoreManager.AI_PROVIDER_OPENAI
-                                                runBlocking { getString(Res.string.gemini) } -> DataStoreManager.AI_PROVIDER_GEMINI
-                                                runBlocking {
-                                                    getString(
-                                                        Res.string.openai_api_compatible,
-                                                    )
-                                                },
-                                                -> DataStoreManager.AI_PROVIDER_CUSTOM_OPENAI
-
-                                                else -> DataStoreManager.AI_PROVIDER_OPENAI
-                                            },
-                                        )
-                                    },
-                                dismiss = runBlocking { getString(Res.string.cancel) },
-                            ),
-                        )
-                    },
-                )
-                SettingItem(
-                    title = stringResource(Res.string.ai_api_key),
-                    subtitle = if (isHasApiKey) "XXXXXXXXXX" else "N/A",
-                    onClick = {
-                        viewModel.setAlertData(
-                            SettingAlertState(
-                                title = runBlocking { getString(Res.string.ai_api_key) },
-                                textField =
-                                    SettingAlertState.TextFieldData(
-                                        label = runBlocking { getString(Res.string.ai_api_key) },
-                                        value = "",
-                                        verifyCodeBlock = {
-                                            (it.isNotEmpty()) to runBlocking { getString(Res.string.invalid_api_key) }
-                                        },
-                                    ),
-                                message = "",
-                                confirm =
-                                    runBlocking { getString(Res.string.set) } to { state ->
-                                        viewModel.setAIApiKey(state.textField?.value ?: "")
-                                    },
-                                dismiss = runBlocking { getString(Res.string.cancel) },
-                            ),
-                        )
-                    },
-                )
-                SettingItem(
-                    title = stringResource(Res.string.custom_ai_model_id),
-                    subtitle = customModelId.ifEmpty { stringResource(Res.string.default_models) },
-                    onClick = {
-                        viewModel.setAlertData(
-                            SettingAlertState(
-                                title = runBlocking { getString(Res.string.custom_ai_model_id) },
-                                textField =
-                                    SettingAlertState.TextFieldData(
-                                        label = runBlocking { getString(Res.string.custom_ai_model_id) },
-                                        value = "",
-                                        verifyCodeBlock = {
-                                            (it.isNotEmpty() && !it.contains(" ")) to runBlocking { getString(Res.string.invalid) }
-                                        },
-                                    ),
-                                message = runBlocking { getString(Res.string.custom_model_id_messages) },
-                                confirm =
-                                    runBlocking { getString(Res.string.set) } to { state ->
-                                        viewModel.setCustomModelId(state.textField?.value ?: "")
-                                    },
-                                dismiss = runBlocking { getString(Res.string.cancel) },
-                            ),
-                        )
-                    },
-                )
-                // Custom OpenAI Base URL - only show when Custom OpenAI is selected
-                if (aiProvider == DataStoreManager.AI_PROVIDER_CUSTOM_OPENAI) {
-                    SettingItem(
-                        title = "Custom Base URL",
-                        subtitle = customOpenAIBaseUrl.ifEmpty { "https://api.openai.com/v1/" },
-                        onClick = {
-                            viewModel.setAlertData(
-                                SettingAlertState(
-                                    title = "Custom Base URL",
-                                    textField =
-                                        SettingAlertState.TextFieldData(
-                                            label = "Base URL",
-                                            value = customOpenAIBaseUrl,
-                                            verifyCodeBlock = {
-                                                (it.isEmpty() || it.startsWith("http")) to "Invalid URL format"
-                                            },
-                                        ),
-                                    message = "Enter OpenAI-compatible API base URL (e.g., https://api.openai.com/v1/)",
-                                    confirm =
-                                        runBlocking { getString(Res.string.set) } to { state ->
-                                            viewModel.setCustomOpenAIBaseUrl(state.textField?.value ?: "")
-                                        },
-                                    dismiss = runBlocking { getString(Res.string.cancel) },
-                                ),
-                            )
-                        },
-                    )
-                    SettingItem(
-                        title = "Custom Headers",
-                        subtitle = if (customOpenAIHeaders.isNotEmpty()) "Configured" else "Not set",
-                        onClick = {
-                            viewModel.setAlertData(
-                                SettingAlertState(
-                                    title = "Custom Headers (JSON)",
-                                    textField =
-                                        SettingAlertState.TextFieldData(
-                                            label = "Headers JSON",
-                                            value = customOpenAIHeaders,
-                                            verifyCodeBlock = { input ->
-                                                if (input.isEmpty()) {
-                                                    true to null
-                                                } else {
-                                                    try {
-                                                        // Simple validation: check if it looks like JSON
-                                                        val trimmed = input.trim()
-                                                        (trimmed.startsWith("{") && trimmed.endsWith("}")) to "Invalid JSON format"
-                                                    } catch (e: Exception) {
-                                                        false to "Invalid JSON format"
-                                                    }
-                                                }
-                                            },
-                                        ),
-                                    message = "Enter custom headers in JSON format:\n{\"key1\":\"value1\",\"key2\":\"value2\"}",
-                                    confirm =
-                                        runBlocking { getString(Res.string.set) } to { state ->
-                                            viewModel.setCustomOpenAIHeaders(state.textField?.value ?: "")
-                                        },
-                                    dismiss = runBlocking { getString(Res.string.cancel) },
-                                ),
-                            )
-                        },
-                    )
-                }
-                SettingItem(
-                    title = stringResource(Res.string.use_ai_translation),
-                    subtitle = stringResource(Res.string.use_ai_translation_description),
-                    switch = (useAITranslation to { viewModel.setAITranslation(it) }),
-                    isEnable = isHasApiKey,
-                )
-            }
-        }
-        item(key = "spotify") {
-            Column {
-                Text(
-                    text = stringResource(Res.string.spotify),
-                    style = typo().labelMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.padding(vertical = 8.dp),
-                )
-                SettingItem(
-                    // The title follows the state: a row that still reads "Log in" while logged in
-                    // gives no clue that tapping it signs you out.
-                    title =
-                        if (spotifyLoggedIn) {
-                            stringResource(Res.string.log_out_from_spotify)
-                        } else {
-                            stringResource(Res.string.log_in_to_spotify)
-                        },
-                    subtitle =
-                        if (spotifyLoggedIn) {
-                            stringResource(Res.string.logged_in)
-                        } else {
-                            stringResource(Res.string.intro_login_to_spotify)
-                        },
-                    onClick = {
-                        if (spotifyLoggedIn) {
-                            viewModel.confirmLogOut(
-                                confirmLabel = runBlocking { getString(Res.string.log_out_from_spotify) },
-                            ) { viewModel.setSpotifyLogIn(false) }
-                        } else {
-                            navController.navigate(SpotifyLoginDestination)
-                        }
-                    },
-                )
-                SettingItem(
-                    title = stringResource(Res.string.enable_spotify_lyrics),
-                    subtitle = stringResource(Res.string.spotify_lyrícs_info),
-                    switch = (spotifyLyrics to { viewModel.setSpotifyLyrics(it) }),
-                    isEnable = spotifyLoggedIn,
-                )
-                SettingItem(
-                    title = stringResource(Res.string.enable_canvas),
-                    subtitle = stringResource(Res.string.canvas_info),
-                    switch = (spotifyCanvas to { viewModel.setSpotifyCanvas(it) }),
-                    isEnable = spotifyLoggedIn,
-                )
-                // Sits with the canvas because it replaces it, but carries no isEnable: the two
-                // rows above need a Spotify session and this one needs no account at all, so
-                // gating it on spotifyLoggedIn would lock it away from the users it works for.
-                SettingItem(
-                    title = stringResource(Res.string.enable_animated_artwork),
-                    subtitle = stringResource(Res.string.animated_artwork_info),
-                    switch = (amAnimatedArtwork to { viewModel.setAMAnimatedArtwork(it) }),
-                )
-            }
-        }
-        item(key = "discord") {
-            Column {
-                Text(
-                    text = stringResource(Res.string.discord_integration),
-                    style = typo().labelMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.padding(vertical = 8.dp),
-                )
-                SettingItem(
-                    title =
-                        if (discordLoggedIn) {
-                            stringResource(Res.string.log_out_from_discord)
-                        } else {
-                            stringResource(Res.string.log_in_to_discord)
-                        },
-                    subtitle =
-                        if (discordLoggedIn) {
-                            stringResource(Res.string.logged_in)
-                        } else {
-                            stringResource(Res.string.intro_login_to_discord)
-                        },
-                    onClick = {
-                        if (discordLoggedIn) {
-                            viewModel.confirmLogOut(
-                                confirmLabel = runBlocking { getString(Res.string.log_out_from_discord) },
-                            ) { viewModel.logOutDiscord() }
-                        } else {
-                            navController.navigate(DiscordLoginDestination)
-                        }
-                    },
-                )
-                SettingItem(
-                    title = stringResource(Res.string.enable_rich_presence),
-                    subtitle = stringResource(Res.string.rich_presence_info),
-                    switch = (richPresenceEnabled to { viewModel.setDiscordRichPresenceEnabled(it) }),
-                    isEnable = discordLoggedIn,
-                )
-            }
-        }
-        // Hidden entirely when the build carries no Last.fm credentials — a FOSS build, or a full
-        // build whose local.properties has no key.
-        if (viewModel.lastfmAvailable) {
-            item(key = "lastfm") {
-                Column {
-                    Text(
-                        text = stringResource(Res.string.lastfm_integration),
-                        style = typo().labelMedium,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier.padding(vertical = 8.dp),
-                    )
-                    SettingItem(
-                        title =
-                            if (lastfmLoggedIn) {
-                                stringResource(Res.string.log_out_from_lastfm)
-                            } else {
-                                stringResource(Res.string.log_in_to_lastfm)
-                            },
-                        subtitle =
-                            if (lastfmLoggedIn) {
-                                stringResource(Res.string.logged_in_as, lastfmUsername)
-                            } else {
-                                stringResource(Res.string.intro_login_to_lastfm)
-                            },
-                        onClick = {
-                            if (lastfmLoggedIn) {
-                                viewModel.confirmLogOut(
-                                    confirmLabel = runBlocking { getString(Res.string.log_out_from_lastfm) },
-                                ) { viewModel.logOutLastfm() }
-                            } else {
-                                navController.navigate(LastfmLoginDestination)
-                            }
-                        },
-                    )
-                    SettingItem(
-                        title = stringResource(Res.string.enable_scrobbling),
-                        subtitle = stringResource(Res.string.scrobbling_info),
-                        switch = (lastfmScrobbleEnabled to { viewModel.setLastfmScrobbleEnabled(it) }),
-                        isEnable = lastfmLoggedIn,
-                    )
-                }
-            }
-        }
-        item(key = "sponsor_block") {
-            Column {
-                Text(
-                    text = stringResource(Res.string.sponsorBlock),
-                    style = typo().labelMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.padding(vertical = 8.dp),
-                )
-                SettingItem(
-                    title = stringResource(Res.string.enable_sponsor_block),
-                    subtitle = stringResource(Res.string.skip_sponsor_part_of_video),
-                    switch = (enableSponsorBlock to { viewModel.setSponsorBlockEnabled(it) }),
-                )
-                val listName =
-                    SponsorBlockType.toList().map { it.displayString() }
-                SettingItem(
-                    title = stringResource(Res.string.categories_sponsor_block),
-                    subtitle = stringResource(Res.string.what_segments_will_be_skipped),
-                    onClick = {
-                        viewModel.setAlertData(
-                            SettingAlertState(
-                                title = runBlocking { getString(Res.string.categories_sponsor_block) },
-                                multipleSelect =
-                                    SettingAlertState.SelectData(
-                                        listSelect =
-                                            listName
-                                                .mapIndexed { index, item ->
-                                                    (
-                                                        skipSegments?.contains(
-                                                            SponsorBlockType.toList().getOrNull(index)?.value,
-                                                        ) == true
-                                                    ) to item
-                                                }.also {
-                                                    Logger.w("SettingScreen", "SettingAlertState: $skipSegments")
-                                                    Logger.w("SettingScreen", "SettingAlertState: $it")
-                                                },
-                                    ),
-                                confirm =
-                                    runBlocking { getString(Res.string.save) } to { state ->
-                                        viewModel.setSponsorBlockCategories(
-                                            state.multipleSelect
-                                                ?.getListSelected()
-                                                ?.map { selected ->
-                                                    listName.indexOf(selected)
-                                                }?.mapNotNull { s ->
-                                                    SponsorBlockType.toList().getOrNull(s).let {
-                                                        it?.value
-                                                    }
-                                                }?.toCollection(ArrayList()) ?: arrayListOf(),
-                                        )
-                                    },
-                                dismiss = runBlocking { getString(Res.string.cancel) },
-                            ),
-                        )
-                    },
-                    isEnable = enableSponsorBlock,
-                )
-                val beforeUrl = stringResource(Res.string.sponsor_block_intro).substringBefore("https://sponsor.ajay.app/")
-                val afterUrl = stringResource(Res.string.sponsor_block_intro).substringAfter("https://sponsor.ajay.app/")
-                Text(
-                    buildAnnotatedString {
-                        append(beforeUrl)
-                        withLink(
-                            LinkAnnotation.Url(
-                                "https://sponsor.ajay.app/",
-                                TextLinkStyles(style = SpanStyle(color = MaterialTheme.colorScheme.primary)),
-                            ),
-                        ) {
-                            append("https://sponsor.ajay.app/")
-                        }
-                        append(afterUrl)
-                    },
-                    style = typo().bodySmall,
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp),
                 )
             }
         }
