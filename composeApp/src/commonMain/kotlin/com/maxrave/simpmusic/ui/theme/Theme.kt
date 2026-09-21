@@ -93,6 +93,22 @@ fun parseThemeColorHex(hex: String): Color? {
  * still have a brighter-than-page tier to lift onto. Dark stays pure-black AMOLED: black does
  * not glare and saves OLED.
  */
+/**
+ * Cobalt secondary/tertiary accent, layered on top of the seed-derived scheme.
+ *
+ * Material 3's tonal-spot generation derives secondary/tertiary hues close to the seed, which
+ * keeps a red seed's secondary in the same rose family rather than the cobalt/indigo the design
+ * calls for. Pin secondary and its containers to a cobalt ramp instead; primary (ruby) and
+ * neutrals stay seed-derived.
+ */
+private fun ColorScheme.withCobaltSecondary(isDark: Boolean): ColorScheme =
+    copy(
+        secondary = Color(0xFF4F41A3),
+        onSecondary = Color(0xFFFFFFFF),
+        secondaryContainer = if (isDark) Color(0xFF251058) else Color(0xFFE1DFFF),
+        onSecondaryContainer = if (isDark) Color(0xFFE1DFFF) else Color(0xFF251058),
+    )
+
 private fun ColorScheme.withNeutralLightSurfaces(): ColorScheme =
     copy(
         background = Color(0xFFFAFAFA),
@@ -148,7 +164,9 @@ fun AppTheme(
                 isDark = isDark,
                 isAmoled = isDark,
                 style = PaletteStyle.TonalSpot,
-                modifyColorScheme = { cs -> if (isDark) cs else cs.withNeutralLightSurfaces() },
+                modifyColorScheme = { cs ->
+                    cs.withCobaltSecondary(isDark).let { if (isDark) it else it.withNeutralLightSurfaces() }
+                },
             )
     // Immersive screens stay dark even at light theme (see [ForceDarkContent]). Resolve their scheme
     // once here instead of letting every such subtree build a palette of its own.

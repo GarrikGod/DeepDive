@@ -6,9 +6,11 @@ import androidx.compose.ui.graphics.Color
 
 /**
  * Brand seed color. The whole Material 3 ColorScheme is generated from this
- * color at runtime — see [AppTheme].
+ * color at runtime — see [AppTheme]. Ruby red; Material 3's tonal-spot
+ * generation derives the cobalt/indigo secondary and tertiary tones from it
+ * automatically, so only the seed needs to change here.
  */
-val seed = Color(0xFF8ECAE6)
+val seed = Color(0xFFD50000)
 
 // ===== Semantic colors (not derivable from the color scheme) =====
 
