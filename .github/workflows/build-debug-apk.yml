@@ -21,7 +21,16 @@ jobs:
           java-version: '21'
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        run: |
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKMANAGER" ]; then
+            SDKMANAGER=$(find "$ANDROID_HOME/cmdline-tools" -maxdepth 2 -name sdkmanager -type f | sort -V | tail -1)
+          fi
+          yes | "$SDKMANAGER" --licenses >/dev/null || true
+          "$SDKMANAGER" "platform-tools" "platforms;android-37" || true
+          # No explicit buildToolsVersion is pinned in the Gradle config, so the Android
+          # Gradle Plugin resolves and downloads a compatible build-tools version itself
+          # during the Gradle build, now that licenses are pre-accepted above.
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
