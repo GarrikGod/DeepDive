@@ -995,10 +995,12 @@ fun NowPlayingContentSpotify(
                                         Spacer(Modifier.height(16.dp))
                                     }
                                     // List Bottom Buttons - MODIFIED TO ADD PLAYLIST BUTTON
+                                    // Height raised from 32dp to fit the 48dp icon buttons below
+                                    // (Android's minimum comfortable touch target) without clipping.
                                     Row(
                                         modifier =
                                             Modifier
-                                                .height(32.dp)
+                                                .height(48.dp)
                                                 .fillMaxWidth()
                                                 .padding(horizontal = 20.dp),
                                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -1015,20 +1017,25 @@ fun NowPlayingContentSpotify(
                                             IconButton(
                                                 modifier =
                                                     Modifier
-                                                        .size(24.dp)
+                                                        .size(48.dp)
                                                         .aspectRatio(1f)
                                                         .clip(CircleShape),
                                                 onClick = {
                                                     actions.onShowInfo()
                                                 },
                                             ) {
-                                                Icon(imageVector = SimpIcons.Info, tint = Color.White, contentDescription = "")
+                                                Icon(
+                                                    imageVector = SimpIcons.Info,
+                                                    tint = Color.White,
+                                                    contentDescription = "",
+                                                    modifier = Modifier.size(28.dp),
+                                                )
                                             }
                                             // Cyan rather than colorScheme.primary: this screen is force-dark whatever
                                             // the app theme is, so a light-theme primary would sink into the black
                                             // backdrop. Mirrors the `if (forceDark) Color.Cyan` rule in FullWidthItems.
                                             PlatformCastButton(
-                                                modifier = Modifier.size(24.dp),
+                                                modifier = Modifier.size(48.dp),
                                                 tint = if (state.castState.isRemote) Color.Cyan else Color.White,
                                             )
                                             AnimatedVisibility(visible = state.castState.isRemote) {
@@ -1054,7 +1061,7 @@ fun NowPlayingContentSpotify(
                                             IconButton(
                                                 modifier =
                                                     Modifier
-                                                        .size(24.dp)
+                                                        .size(48.dp)
                                                         .aspectRatio(1f)
                                                         .clip(CircleShape),
                                                 onClick = {
@@ -1065,6 +1072,7 @@ fun NowPlayingContentSpotify(
                                                     imageVector = SimpIcons.PlaylistAdd,
                                                     tint = Color.White,
                                                     contentDescription = "Add to Playlist",
+                                                    modifier = Modifier.size(28.dp),
                                                 )
                                             }
 
@@ -1072,7 +1080,7 @@ fun NowPlayingContentSpotify(
                                             IconButton(
                                                 modifier =
                                                     Modifier
-                                                        .size(24.dp)
+                                                        .size(48.dp)
                                                         .aspectRatio(1f)
                                                         .clip(CircleShape),
                                                 onClick = {
@@ -1083,6 +1091,7 @@ fun NowPlayingContentSpotify(
                                                     imageVector = SimpIcons.QueueMusic,
                                                     tint = Color.White,
                                                     contentDescription = "",
+                                                    modifier = Modifier.size(28.dp),
                                                 )
                                             }
                                         }
