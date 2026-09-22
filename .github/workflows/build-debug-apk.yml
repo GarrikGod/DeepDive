@@ -97,5 +97,4 @@ jobs:
           gh release delete latest-debug --yes --cleanup-tag || true
           gh release create latest-debug "${{ steps.find_apk.outputs.path }}" \
             --title "DeepDive (latest debug build)" \
-            --notes "Automatically built from the latest commit on \`dev\` (${{ github.sha }}). Always the newest build — download DeepDive.apk below." \
-            --prerelease
+            --notes "Automatically built from the latest commit on \`dev\` (${{ github.sha }}). Always the newest build — download DeepDive.apk below."
