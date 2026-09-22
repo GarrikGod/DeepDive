@@ -5,6 +5,9 @@ on:
     branches: [dev]
   workflow_dispatch: {}
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -68,7 +71,12 @@ jobs:
             echo "No APK found under androidApp/build/outputs/apk" >&2
             exit 1
           fi
-          echo "path=$APK_PATH" >> "$GITHUB_OUTPUT"
+          # Give the uploaded/released file a fixed, human-friendly name instead of
+          # AGP's default (androidApp-debug.apk) so the download link and the file
+          # on the phone both read "DeepDive", not an internal module name.
+          RENAMED_PATH="$(dirname "$APK_PATH")/DeepDive.apk"
+          cp "$APK_PATH" "$RENAMED_PATH"
+          echo "path=$RENAMED_PATH" >> "$GITHUB_OUTPUT"
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
@@ -76,3 +84,18 @@ jobs:
           name: app-debug
           path: ${{ steps.find_apk.outputs.path }}
           if-no-files-found: error
+
+      # A one-tap download link that works from a phone browser with no GitHub login and
+      # no hunting through the Actions UI: this moves the same APK to a GitHub Release,
+      # whose asset URLs are public. "latest-debug" is a single rolling release — each
+      # build replaces its asset instead of creating a new release, so the same short URL
+      # (…/releases/download/latest-debug/DeepDive.apk) always serves the newest build.
+      - name: Publish rolling release with the APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest-debug --yes --cleanup-tag || true
+          gh release create latest-debug "${{ steps.find_apk.outputs.path }}" \
+            --title "DeepDive (latest debug build)" \
+            --notes "Automatically built from the latest commit on \`dev\` (${{ github.sha }}). Always the newest build — download DeepDive.apk below." \
+            --prerelease
