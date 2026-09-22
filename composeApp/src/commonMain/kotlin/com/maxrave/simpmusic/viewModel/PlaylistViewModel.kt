@@ -493,6 +493,32 @@ class PlaylistViewModel(
             PlaylistUIEvent.Shuffle -> {
                 val shuffleEndpoint = data.shuffleEndpoint
                 if (shuffleEndpoint == null) {
+                    // YouTube Music's response omits a shuffle endpoint for some playlists
+                    // (observed on the auto-generated "Liked Music" playlist). When we've
+                    // already loaded every track locally there's no need for a server-side
+                    // shuffle queue — shuffle what we have. Only fall through to the "not
+                    // available" toast while pagination is still in progress, since shuffling
+                    // a partial list would silently skip tracks instead of failing loudly.
+                    val loadedList = tracks.value
+                    if (loadedList.isNotEmpty() && tracksListState.value == ListState.PAGINATION_EXHAUST) {
+                        val shuffled = loadedList.shuffled()
+                        setQueueData(
+                            QueueData.Data(
+                                listTracks = shuffled.toCollection(arrayListOf<Track>()),
+                                firstPlayedTrack = shuffled.first(),
+                                playlistId = data.id,
+                                playlistName = "\"${data.title}\" ${getString(Res.string.shuffle)}",
+                                playlistType = PlaylistType.PLAYLIST,
+                                continuation = null,
+                            ),
+                        )
+                        loadMediaItem(
+                            shuffled.first(),
+                            Config.PLAYLIST_CLICK,
+                            0,
+                        )
+                        return
+                    }
                     makeToast(
                         getString(Res.string.shuffle_not_available),
                     )
